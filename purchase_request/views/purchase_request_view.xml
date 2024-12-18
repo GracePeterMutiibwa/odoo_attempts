@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <record id="view_with_a_purchase_request_list" model="ir.ui.view">
+        <field name="name">purchase.request.list</field>
+        <field name="model">purchase.request</field>
+        <field name="arch" type="xml">
+            <list string='Available Requests'>
+                <field name="request_name" />
+                <field name="request_submitter" />
+                <field name="from_what_department" />
+                <field name="when_request_was_made" />
+                <field name="request_state" />
+                <field name="proposed_vendors" widget="many2many_tags" />
+                <button name="action_approve_request" type="object" string="Approve"
+                    class="btn-primary" icon="fa-check" />
+                <button name="action_reject_request" type="object" string="Reject"
+                    class="btn-danger" icon="fa-times" />
+            </list>
+        </field>
+    </record>
+
+
+    <record id="view_with_a_purchase_request_form" model="ir.ui.view">
+        <field name="name">purchase.request.form</field>
+        <field name="model">purchase.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="request_name" readonly="1" />
+                        <field name="request_submitter" />
+                        <field name="from_what_department" />
+                        <field name="when_request_was_made" />
+                        <field name="proposed_vendors" widget="many2many_tags" />
+                        <field name="request_state" readonly="1" />
+                    </group>
+
+                    <field name="for_what_products">
+                        <list editable="bottom">
+                            <field name="product_id" />
+                            <field name="product_quantity" />
+                        </list>
+                    </field>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_to_execute_for_purchase_request" model="ir.actions.act_window">
+        <field name="name">Purchase Requests</field>
+        <field name="res_model">purchase.request</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="seq_purchase_request" model="ir.sequence">
+        <field name="name">Purchase Request</field>
+        <field name="code">purchase.request</field>
+        <field name="prefix">PR/</field>
+        <field name="padding">5</field>
+    </record>
+
+    <menuitem id="menu_that_triggers_purchase_request"
+        name="Purchase Requests"
+        parent="purchase.menu_purchase_root"
+        action="action_to_execute_for_purchase_request" />
+</odoo>
